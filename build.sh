@@ -11,7 +11,7 @@ fi
 ABI="${1:-arm64-v8a}"
 API="${2:-26}"
 
-echo "Building nether-pathfinder for Android $ABI (API $API)"
+echo "Building nether-pathfinder v1.4.1 for Android $ABI (API $API)"
 echo "NDK: $NDK_HOME"
 
 cmake -G Ninja -B build \
