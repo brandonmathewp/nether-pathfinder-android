@@ -13,12 +13,12 @@ OUTPUT_JAR="nether-pathfinder-${VERSION}-android.jar"
 echo "Downloading official v${VERSION} JAR..."
 wget -q "$OFFICIAL_JAR_URL" -O /tmp/np-orig.jar
 
-python3 << PYEOF
+python3 - "$OUTPUT_JAR" << 'PYEOF'
 import lzma, zipfile, io, sys
 
 JAR_IN = '/tmp/np-orig.jar'
 NEW_SO = 'libnether_pathfinder.so'
-JAR_OUT = sys.argv[1] if len(sys.argv) > 1 else 'nether-pathfinder-1.4.1-android.jar'
+JAR_OUT = sys.argv[1]
 
 with zipfile.ZipFile(JAR_IN, 'r') as z:
     jar_entries = {n: z.read(n) for n in z.namelist() if n != 'natives.zip.xz'}
@@ -45,6 +45,6 @@ with zipfile.ZipFile(JAR_OUT, 'w', zipfile.ZIP_DEFLATED) as out_z:
     out_z.writestr('natives.zip.xz', new_xz)
 
 print(f"Wrote {JAR_OUT}")
-PYEOF "$OUTPUT_JAR"
+PYEOF
 
 echo "Done: $OUTPUT_JAR"
